@@ -1,0 +1,19 @@
+version: '3.9'
+
+services:
+  web:
+    image: nginx:alpine
+    ports:
+      - "8080:80"
+    volumes:
+      - ./html:/usr/share/nginx/html
+    restart: unless-stopped
+
+  backend:
+    image: python:3.12-slim
+    command: python -m http.server 8000 --directory /app
+    volumes:
+      - ./backend:/app
+    ports:
+      - "8001:8000"
+    restart: unless-stopped
